@@ -135,7 +135,7 @@ app.post("/research", (req, res) => {
      * 
      * If no match in DB, then:
 
-            Scrape research papers from the web (e.g., Google Scholar, arXiv, PubMed).
+            Scrape research papers, whitepapers, technical articles from the web (web3, startups).
             Extract important keywords from the scraped papers.
             Store those keywords & links in the database for future searches.
             Return the scraped paper to the user.
