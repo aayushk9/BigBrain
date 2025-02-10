@@ -3,23 +3,23 @@
 **For those who love to learn.**  
 
 ## Overview  
-BigBrain is a web application designed to help users discover and explore research papers across various domains. Whether you’re into **diet, brain science, athletics, AI or more**, BigBrain makes it easy to **find and search for relevant research papers**.  
+BigBrain is a web application designed to help users discover and explore research papers across various domains. Whether you’re into **web3, startups, AI or more**, BigBrain makes it easy to **find and search for relevant research papers or whitepapers**.  
 
 ## Features  
-- **Topic Based Browsing** – Select from various categories like AI, fitness, psychology and more.  
-- **Smart Search** – Input specific queries (e.g. calorie efficient diet for males aged 20-25) and get **relevant research papers**.  
+- **Topic Based Browsing** – Select from various categories like web3, startups, AI and more.  
+- **Smart Search** – Input specific queries and get **relevant papers**.  
 - **Curated Knowledge** – Access high-quality research papers without the hassle of manual searching.  
 
 ## Tech Stack  
-- **Frontend**:  
+- **Frontend**: React js
 - **Backend**: Node.js + Express  
-- **Database**: MongoDB / PostgreSQL  
+- **Database**: MongoDB 
 - **Search Engine**: 
 
 ## How It Works  
-1. **Select a topic** from the dropdown (e.g., Diet, AI, Brain Science).  
-2. **Enter your query** in the search bar (e.g., best diet for mental performance).  
-3. **Get research papers** according to your query.  
+1. **Select a topic** from the dropdown (e.g. AI or Web3).  
+2. **Enter your query** in the search bar.  
+3. **Get data** according to your query.  
 4. **Read, explore and grow your knowledge**.  
 
 ## Future Plans  
