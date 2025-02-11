@@ -122,29 +122,46 @@ app.delete("/logout", (req, res) => {
 
 });
 
-app.post("/research", (req, res) => {
-    const searchForPaper = req.body.searchForPaper;
-    /******
-     * 
-     *let that user see this content for multiple times but after that tell them to signup
-      so than use jwt verify to verify the token and authenticate
+app.post("/research", async(req, res) => {
+    const {category, userInput} = req.body;
 
-     we need to compare the data in our database with the data the user has requested
-     using text index we will be searching for the keywords entered by the user and compare it with the keywords
-     in our database so the papers which match will be shared
-     the paper which matches the most should be at the top
-     * 
-     * If no match in DB, then:
+    if(!category || !userInput){
+        return res.json({
+            msg: "Category and input are required"   
+        })
+    }
 
-            Scrape research papers from the web (e.g., Google Scholar, arXiv, PubMed).
-            Extract important keywords from the scraped papers.
-            Store those keywords & links in the database for future searches.
-            Return the scraped paper to the user.
+    try {
+        const dbResults = await ResearchPaper.find(
+            // text index to search using $text
+            { $text: { $search: userInput } },  // $search: MongoDB searches for userInput in all fields (e.g., title, abstract, keywords).
+            { score: { $meta: "textScore" } } 
+        )
+         .sort({ score: { $meta: "textScore" } })
     
-     * 
-     * 
-     * **********/ 
     
+        const useScraper = await scraper(category, userInput);
+        const finalResult = [
+            ...dbResults.map(paper => ({
+                title: paper.title,
+                //abstract: paper.abstract,
+                author: paper.author,
+                link: paper.link,
+                topic: paper.topic,
+                source: paper.source,  
+            })),
+            ...useScraper.map(item => ({
+                 ...item
+            }))
+        ]
+            return res.json({
+                msg: "Paper found",    
+                papers: finalResult
+            })
+    }  catch(err){
+        console.error(err);
+        return res.status(500).json({ msg: "Internal server error" });
+    }
 })
 
 app.listen(port, () => {
