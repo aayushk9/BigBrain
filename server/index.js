@@ -9,8 +9,9 @@ const port = 3000;
 const SECRET_KEY = process.env.JWT_SECRET
 const URI = process.env.MONGO_URI
 const User = require("./models/userModel");
-const ResearchPaper = require("./models/ResearchPaper");
+const ResearchPaper = require("./models/ResearchPaper");    
 const scraper = require("./scraper/scraper")
+const news = require("./news/news"); 
 
 app.use(express.json());
 
@@ -90,7 +91,7 @@ app.post("/login", async (req, res) => {
         username: username,
         password: password
     })
-
+  
     if (!result.success) {
         return res.status(400).json({
             msg: "Please enter valid data"
@@ -112,11 +113,11 @@ app.post("/login", async (req, res) => {
         })
     }
 
-    const token = jwt.sign({ username }, SECRET_KEY);
+    const token = jwt.sign({ username }, SECRET_KEY);   
     return res.status(200).json({
         msg: `Token generated ${token}`
     })
-});
+});  
 
 app.delete("/logout", (req, res) => {
 
@@ -127,43 +128,55 @@ app.post("/research", async(req, res) => {
 
     if(!category || !userInput){
         return res.json({
-            msg: "Category and input are required"   
+            msg: "Category, subcategory and input are required"   
         })
     }
 
     try {
-        const dbResults = await ResearchPaper.find(
+        const dbResults = await ResearchPaper.find(  
             // text index to search using $text
             { $text: { $search: userInput } },  // $search: MongoDB searches for userInput in all fields (e.g., title, abstract, keywords).
             { score: { $meta: "textScore" } } 
         )
          .sort({ score: { $meta: "textScore" } })
+         //.limit(2);
     
     
         const useScraper = await scraper(category, userInput);
-        const finalResult = [
-            ...dbResults.map(paper => ({
+
+        const finalResult = [  
+            ...dbResults.map(paper => ({  
                 title: paper.title,
-                //abstract: paper.abstract,
                 author: paper.author,
                 link: paper.link,
                 topic: paper.topic,
-                source: paper.source,  
+                source: paper.source,    
             })),
-            ...useScraper.map(item => ({
-                 ...item
+            ...useScraper.map(item => ({  
+                 ...item,
             }))
         ]
-            return res.json({
-                msg: "Paper found",    
-                papers: finalResult
+
+            return res.json({  
+                papers: finalResult  
             })
-    }  catch(err){
+    }  catch(err){  
         console.error(err);
         return res.status(500).json({ msg: "Internal server error" });
     }
 })
 
+app.get('/news', async(req, res) => {
+  const getNews = await news(); 
+  return res.json({  
+    News: getNews
+  })
+})
+
+app.get("/x-trends", async (req, res) => {
+   
+})
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
-});       
+});            
