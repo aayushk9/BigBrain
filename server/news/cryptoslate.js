@@ -1,17 +1,17 @@
 const Parser = require("rss-parser");
 const parser = new Parser();
 
-const coinJournalNews = async() => {
-    try{
-        const feed = await parser.parseURL("https://coinjournal.net/feed/");
+const cryptoSlateNews = async() => {
+    try {
+        const feed = await parser.parseURL('https://cryptoslate.com/feed/')
         return feed.items.slice(0, 6).map(item => ({
             title: item.title,
             link: item.link  
         }));
     } catch(err){
-        console.error(err);
-        return [];
-    } 
+      console.error(err);
+      return []  
+    }
 }
-   
-module.exports = coinJournalNews;
+
+module.exports = cryptoSlateNews;    
