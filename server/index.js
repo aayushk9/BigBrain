@@ -8,10 +8,18 @@ const app = express();
 const port = 3000;
 const SECRET_KEY = process.env.JWT_SECRET
 const URI = process.env.MONGO_URI
+
 const User = require("./models/userModel");
-const ResearchPaper = require("./models/ResearchPaper");    
+const ResearchPaper = require("./models/ResearchPaper");  
+
 const scraper = require("./scraper/scraper")
 const news = require("./news/news"); 
+const ycBlog = require("./startups/yc");
+const startups = require("./startups/allStartups");
+const earlyStageStartups = require("./startups/earlyStageStartups");
+const saas = require("./startups/saastr");
+const aiStartup = require("./startups/aiStartups");
+const founders = require("./startups/founders")
 
 app.use(express.json());
 
@@ -123,12 +131,12 @@ app.delete("/logout", (req, res) => {
 
 });
 
-app.post("/research", async(req, res) => {
-    const {category, userInput} = req.body;
+app.post("/research-papers", async(req, res) => {
+    const {userInput} = req.body;
 
-    if(!category || !userInput){
+    if(!userInput){
         return res.json({
-            msg: "Category, subcategory and input are required"   
+            msg: "Input field is required"   
         })
     }
 
@@ -142,7 +150,7 @@ app.post("/research", async(req, res) => {
          //.limit(2);
     
     
-        const useScraper = await scraper(category, userInput);
+        const useScraper = await scraper(userInput); 
 
         const finalResult = [  
             ...dbResults.map(paper => ({  
@@ -166,15 +174,56 @@ app.post("/research", async(req, res) => {
     }
 })
 
-app.get('/news', async(req, res) => {
+app.get('/cryptonews', async(req, res) => {
   const getNews = await news(); 
   return res.json({  
     News: getNews
   })
 })
 
-app.get("/x-trends", async (req, res) => {
-   
+app.get("/ycblogs", async (req, res) => {
+   const getYcblogs = await ycBlog();
+   return res.json({
+     articles: getYcblogs
+   })
+});
+
+app.get("/earlyStageStartups", async(req, res) => {
+    const getEarlyStartup = await earlyStageStartups();
+    return res.json({
+        getEarlyStartup
+    })
+})
+
+app.get("/all-about-startups", async(req, res) => {
+  const getStartups = await startups();
+  return res.json({
+    getStartups
+  })
+})
+
+app.get("/KnowSaaS", async (req, res) => {
+    
+    const getSaaS = await saas();
+    return res.json({
+        Note: "SaaStr is the only non-vendor destination where SaaS companies can come together to learn and grow their businesses through content, events and training.",
+        getSaaS
+    })
+} )
+
+
+app.get("/aistartups", async(req, res)=> {
+    const getAIStartups = await aiStartup();
+    return res.json({
+        getAIStartups
+    })
+})
+
+app.get("/entrepreneur", async(req, res) => {
+    const getFounders = await founders();
+    return res.json({
+        getFounders
+    })
 })
 
 app.listen(port, () => {
