@@ -3,7 +3,7 @@
 **For those who love to learn.**  
 
 ## Overview  
-BigBrain is a web application designed to help users discover and explore research papers across various domains. Whether you’re into **web3, startups, AI or more**, BigBrain makes it easy to **find and search for relevant research papers or whitepapers**.  
+BigBrain is a web application designed to help users discover and explore research papers across various domains. Whether you’re into **web3, startups, AI or more**, BigBrain makes it easy to **find and search for relevant research papers, whitepapers and news articles**.  
 
 ## Features  
 - **Topic Based Browsing** – Select from various categories like web3, startups, AI and more.  
