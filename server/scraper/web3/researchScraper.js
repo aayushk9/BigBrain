@@ -25,7 +25,7 @@ const fetchArxivPapers = async (userInput) => {
     try {    
 
         if (!client.isOpen) {
-            console.log("⏳ Reconnecting Redis...");
+            console.log("reconnecting redis");
             await client.connect();
         }
 
@@ -58,7 +58,7 @@ const fetchArxivPapers = async (userInput) => {
         })); 
         
         await client.setEx(userInput, 900, JSON.stringify(papers)); // storing new requests (papers) in redis for 15 minutes
-        console.log("Fetched from arvix and cached");
+        console.log("fetched from arvix and cached");
         return papers;
     } catch (error) {  
         console.error("Error fetching from arXiv API:", error);
