@@ -12,7 +12,6 @@ const scrapeArvix = async (userInput) => {
                     title: item.title,  
                     author: Array.isArray(item.authors) ? item.authors.join(", ") : item.authors,
                     link: item.link,
-                    source: item.source,
                 }));
     
         return results;
@@ -21,7 +20,5 @@ const scrapeArvix = async (userInput) => {
         console.error(err);
     }
 }
-
-
 
 module.exports = scrapeArvix; 
