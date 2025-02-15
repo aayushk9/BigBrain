@@ -1,33 +1,19 @@
-# BigBrain  
+# bigbrain
 
-**For those who love to learn.**  
+## what is bigbrain?
+bigbrain is a web app that helps you discover and explore research papers in web3, you also get to read latest news in crypto from various different sources. And yeah forgot to mention my favorite part about bigbrain, it also has a startups section where you will get to read all about startups.
 
-## Overview  
-BigBrain is a web application designed to help users discover and explore research papers across various domains. Whether you’re into **web3, startups, AI or more**, BigBrain makes it easy to **find and search for relevant research papers, whitepapers and news articles**.  
+## research paper browsing
+- **smart search** – Input specific queries and get **relevant papers**.  
+- **curated knowledge** – Access high-quality research papers without the hassle of manual searching.  
 
-## Features  
-- **Topic Based Browsing** – Select from various categories like web3, startups, AI and more.  
-- **Smart Search** – Input specific queries and get **relevant papers**.  
-- **Curated Knowledge** – Access high-quality research papers without the hassle of manual searching.  
-
-## Tech Stack  
+## tech Stack (mern)
 - **Frontend**: React js
 - **Backend**: Node.js + Express  
-- **Database**: MongoDB 
-- **Search Engine**: 
+- **Database**: MongoDB
 
-## How It Works  
-1. **Select a topic** from the dropdown (e.g. AI or Web3).  
-2. **Enter your query** in the search bar.  
-3. **Get data** according to your query.  
-4. **Read, explore and grow your knowledge**.  
+## contribute 
+feel free to open an issue or a pull request.
 
-## Future Plans  
-- AI-powered recommendations for personalized research.  
-- User accounts to save and bookmark papers.  
-
-## Contributing  
-Want to contribute? Feel free to open an issue or a pull request.
-
-## Contact  
-Have feedback or suggestions? Reach out at **aayushk.dev@gmail.com**  
+## contact  
+Reach out at **aayushk.dev@gmail.com**  
