@@ -4,6 +4,7 @@ const zod = require("zod");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 const SECRET_KEY = process.env.JWT_SECRET
@@ -22,34 +23,37 @@ const aiStartup = require("./startups/aiStartups");
 const founders = require("./startups/founders")
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }))   
 
 mongoose.connect(URI)
-    .then(() => console.log(`Database connected`))
-    .catch((err) => console.error(err))
+    .then(() => console.log(`Database connected`))   
+    .catch((err) => console.error(err))     
 
 app.post("/signup", async (req, res) => {
 
     const { username, password } = req.body;
+    console.log(req.body);
 
     // zod schema for validating user input
-    const signinSchema = zod.object({
+    const signinSchema = zod.object({    
         username: zod.string().min(1, "username is required"),
         password: zod.string()
-            .min(8, "password must contain atleast 8 characters")
+            .min(8, "password must contain atleast 8 characters")  
             .regex(/[A-Z]/, "password must contain atleast one capital letter")
             .regex(/[0-9]/, "password must contain atleast one number")
             .regex(/[\W_]/, "password must contain atleast one special character")
     });
 
     // using that schema check if data is valid
-    const result = signinSchema.safeParse({
+    const result = signinSchema.safeParse({ 
         username, password
     });
 
     if (!result.success) {
-        return res.status(400).json({ error: result.error.format() });
+        return res.json({ error: result.error.format() });
     }
-
+  
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
         const comparePassword = await bcrypt.compare(password, usernameExists.password)
@@ -58,14 +62,14 @@ app.post("/signup", async (req, res) => {
                 msg: "Please go to login route to login"
             })
         } else {
-            return res.json({
+            return res.json({   
                 msg: "Username already taken"
             })
         }
     }
 
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);  
     const token = jwt.sign({ username }, SECRET_KEY);
 
     const user = new User({
@@ -74,16 +78,17 @@ app.post("/signup", async (req, res) => {
     })
 
     await user.save();
-    return res.json({
+    return res.status(201).json({
         msg: "user added to database",
-        token: `${token}`
-    })
+        token: `${token}`   
+    })   
     // redirect
 });
 
 app.post("/login", async (req, res) => {
 
     const { username, password } = req.body;
+    console.log(req.body);  
 
     const loginSchema = zod.object({
         username: zod.string().min(1, "username should have atleast one character"),
@@ -109,21 +114,21 @@ app.post("/login", async (req, res) => {
     // check for correct password
     const usernameExists = await User.findOne({ username });
     if (!usernameExists) {
-        return res.status(404).json({
+        return res.json({
             msg: "User does not exist, please go to signin route"
         })
     }
 
     const comparePassword = await bcrypt.compare(password, usernameExists.password)
     if (!comparePassword) {
-        return res.status(401).json({
+        return res.status(401).json({ 
             msg: "Please enter correct password"
         })
     }
 
     const token = jwt.sign({ username }, SECRET_KEY);   
-    return res.status(200).json({
-        msg: `Token generated ${token}`
+    return res.status(201).json({
+        token: `${token}`
     })
 });  
 
@@ -133,13 +138,14 @@ app.delete("/logout", (req, res) => {
 
 app.post("/research-papers", async(req, res) => {
     const {userInput} = req.body;
+    console.log(req.body)
 
     if(!userInput){
         return res.json({
             msg: "Input field is required"   
         })
     }
-
+  
     try {
         const dbResults = await ResearchPaper.find(  
             // text index to search using $text
@@ -177,14 +183,14 @@ app.post("/research-papers", async(req, res) => {
 app.get('/cryptonews', async(req, res) => {
   const getNews = await news(); 
   return res.json({  
-    News: getNews
+    news: getNews
   })
-})
+})   
 
 app.get("/ycblogs", async (req, res) => {
    const getYcblogs = await ycBlog();
    return res.json({
-     articles: getYcblogs
+     articles: getYcblogs    
    })
 });
 
@@ -198,7 +204,7 @@ app.get("/earlyStageStartups", async(req, res) => {
 app.get("/all-about-startups", async(req, res) => {
   const getStartups = await startups();
   return res.json({
-    getStartups
+    news: getStartups
   })
 })
 

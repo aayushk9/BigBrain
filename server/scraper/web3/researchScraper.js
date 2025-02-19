@@ -25,7 +25,7 @@ const fetchArxivPapers = async (userInput) => {
     try {    
 
         if (!client.isOpen) {
-            console.log("⏳ Reconnecting Redis...");
+            console.log(" reconnecting redis");
             await client.connect();
         }
 
