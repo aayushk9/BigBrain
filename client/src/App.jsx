@@ -13,8 +13,7 @@ import { StartupsData } from "./components/StartupsData";
 function App() {
   return (  
     <BrowserRouter>
-    <img src="/logo.png" alt="logo"/>
-    
+    <img src="/logo.png" alt="logo"/>    
 
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -30,7 +29,7 @@ function App() {
             <Navbar/>
             <Context />
             <Research />    
-            <CryptoNews />
+            <CryptoNews />   
             <Startups />   
           </>  
         }

@@ -1,8 +1,11 @@
-
+import { Link } from "react-router-dom"
 export function Research(){
     return (
         <div>
-            <button>Find research papers</button>   
+            <Link to="/research/search">
+              <button>Find research papers</button>   
+            </Link>
         </div>
     )
 }
+   

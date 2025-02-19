@@ -1,14 +1,13 @@
+import { Link } from "react-router-dom"
 
-export function Navbar() {
-  return (
-    <div>
-      <nav>
-        <img src="/logo.png" alt="" />
-        <ul>
-          <li>Login</li>
-          <li>Signup</li>
-        </ul>
-      </nav>
-    </div>
-  )
+export function Navbar(){
+    return (
+        <nav>
+         
+            <ul>
+                <li><Link to= "/login">Login</Link></li>
+                <li><Link to = "/signup">Signup</Link></li>
+            </ul>
+        </nav>
+    )
 }  

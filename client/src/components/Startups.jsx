@@ -1,9 +1,11 @@
-
+import { Link } from "react-router-dom"
 export function Startups(){
 
     return(
         <div>
-          Read about startups
+          <Link to="/startupnews">
+            Startups News
+          </Link>
         </div>
     )
-}
+}   
