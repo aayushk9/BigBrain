@@ -6,7 +6,7 @@ export function Context() {
           Hey. I am bigbrain.
         </h1>
         <p className="text-gray-400 text-[3vw] sm:text-[2vw] lg:text-[1.5vw] mt-4 tracking-wide leading-snug">
-          I help you find research papers on Web3, 
+          I help you find research papers mainly on Web3, 
           <br />
           provide the latest crypto and startup news. 
         </p>

@@ -30,6 +30,7 @@ export function Signup() {
                 localStorage.setItem("token: ", res.data.token)
                 navigate("/research/search");
             } else {
+                console.log(res.data.msg + "dnfnnn")
                 alert(res.data.msg)
             }
         } catch (err) {

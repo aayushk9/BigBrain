@@ -38,14 +38,14 @@ export function CryptoLists() {
             ) : (
                 <div className="w-full max-w-2xl flex flex-col gap-4">
                     {news.map((news, key) => (
-                        <div key={key} className="bg-gray-200 p-4 rounded-lg shadow-lg hover:bg-gray-400 transition">
-                            <a href={news.link} className="text-black hover:underline block text-lg font-medium">
+                        <div key={key} className=" p-4 rounded-lg shadow-lg hover:bg-gray-900 transition">
+                            <a href={news.link} className="text-white hover:underline block text-lg font-medium">
                                 {news.title}
-                            </a>
+                            </a>  
                         </div>
                     ))}
 
-                </div>
+                </div>  
 
             )}
         </div>

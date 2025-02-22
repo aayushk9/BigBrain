@@ -24,7 +24,7 @@ export function Login() {
           "Content-Type": "application/json"
         }
       })
-      console.log(res.data);
+      console.log(res.data);   
       if (res.data.token) {
         console.log(res.data.token)
         localStorage.setItem("token: ", res.data.token)

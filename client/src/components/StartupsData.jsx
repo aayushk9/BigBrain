@@ -39,12 +39,12 @@ export function StartupsData() {
       ) : (
         <div className="w-full max-w-2xl flex flex-col gap-4">
           {startups.map((startup, key) => (
-            <div key={key} className="bg-gray-200 p-4 rounded-lg shadow-lg hover:bg-gray-400 transition">
-              <a href={startup.link} className="text-black hover:underline block text-lg font-medium">
+            <div key={key} className="p-4 rounded-lg shadow-lg hover:bg-gray-900 transition">
+              <a href={startup.link} className="text-white hover:underline block text-lg font-medium">
                 {startup.title}
               </a>
             </div>
-          ))}
+          ))}   
         </div>
       )}
     </div>
