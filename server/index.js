@@ -57,7 +57,7 @@ app.post("/signup", async (req, res) => {
 
     if (!result.success) {  
         return res.json({    
-             msg: "Enter username with 2 characters, password must contain atleast 8 characters, 1 capital letter, 1 number and 1 special character" 
+             msg: "Enter username with atleast 2 characters, password must contain atleast 8 characters, 1 capital letter, 1 number and 1 special character" 
      })
     }    
     
@@ -100,7 +100,7 @@ app.post("/login", async (req, res) => {
     const usernameExists = await User.findOne({ username });
     if (!usernameExists) {
         return res.json({
-            msg: "User does not exist, please go to signin route to create account"
+            msg: "User does not exist, please go to signup route to create account"
         })
     }
 
