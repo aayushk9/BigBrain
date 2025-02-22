@@ -42,7 +42,7 @@ app.post("/signup", async (req, res) => {
 
     // zod schema for validating user input
     const signinSchema = zod.object({
-        username: zod.string().min(1, "username is required"),
+        username: zod.string().min(2, "username is required"),
         password: zod.string()
             .min(8, "password must contain atleast 8 characters")
             .regex(/[A-Z]/, "password must contain atleast one capital letter")
@@ -55,12 +55,14 @@ app.post("/signup", async (req, res) => {
         username, password
     });
 
-    if (!result.success) {
-        return res.json({ msg: "please enter valid data" });
-    }
-
+    if (!result.success) {  
+        return res.json({    
+             msg: "Enter username with 2 characters, password must contain atleast 8 characters, 1 capital letter, 1 number and 1 special character" 
+     })
+    }    
+    
     const usernameExists = await User.findOne({ username });
-    if (usernameExists) {
+    if (usernameExists) { 
         const comparePassword = await bcrypt.compare(password, usernameExists.password)
         if (usernameExists && comparePassword) {
             return res.json({
@@ -85,7 +87,7 @@ app.post("/signup", async (req, res) => {
     await user.save();
     return res.status(201).json({
         msg: "user added to database",
-        token: `${token}`
+        token: `hello ${token}`
     })
     // redirect
 });
@@ -95,38 +97,16 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     console.log(req.body);
 
-    const loginSchema = zod.object({
-        username: zod.string().min(1, "username should have atleast one character"),
-        password: zod.string()
-            .min(8, "password must contain atleast 8 characters")
-            .regex(/[A-Z]/, "password must contain atleast one capital letter")
-            .regex(/[0-9]/, "password must contain atleast one number")
-            .regex(/[\W_]/, "password must contain at least one special character")
-    })
-
-    // making sure enter valid data
-    const result = loginSchema.safeParse({
-        username: username,
-        password: password
-    })
-
-    if (!result.success) {
-        return res.json({
-            msg: "Please enter valid data"
-        })
-    }
-
-    // check for correct password
     const usernameExists = await User.findOne({ username });
     if (!usernameExists) {
         return res.json({
-            msg: "User does not exist, please go to signin route"
+            msg: "User does not exist, please go to signin route to create account"
         })
     }
 
     const comparePassword = await bcrypt.compare(password, usernameExists.password)
     if (!comparePassword) {
-        return res.json({
+        return res.json({     
             msg: "Please enter correct password"
         })
     }
@@ -176,7 +156,7 @@ app.post("/research-papers", async (req, res) => {
             }))
         ]
 
-        return res.json({
+        return res.json({  
             papers: finalResult
         })
     } catch (err) {
