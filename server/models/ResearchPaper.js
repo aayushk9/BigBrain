@@ -14,12 +14,7 @@ const researchSchema = new Schema({
     author: String,
     link: String,
     topic: String,
-    source: String,    
-    category: {
-        type: String,
-        enum: ["web3", "startups"],  // Only allow these categories
-        required: true
-    }  
+    source: String
 }) 
   
 // This tells MongoDB that these fields should be used for efficient text searching

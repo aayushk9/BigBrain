@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
     });
 
     if (!result.success) {
-        return res.json({ error: result.error.format() });
+        return res.json({ msg: "please enter valid data" });
     }
   
     const usernameExists = await User.findOne({ username });
@@ -106,7 +106,7 @@ app.post("/login", async (req, res) => {
     })
   
     if (!result.success) {
-        return res.status(400).json({
+        return res.json({
             msg: "Please enter valid data"
         })
     }
@@ -121,16 +121,16 @@ app.post("/login", async (req, res) => {
 
     const comparePassword = await bcrypt.compare(password, usernameExists.password)
     if (!comparePassword) {
-        return res.status(401).json({ 
+        return res.json({ 
             msg: "Please enter correct password"
         })
     }
 
     const token = jwt.sign({ username }, SECRET_KEY);   
-    return res.status(201).json({
+    return res.status(200).json({
         token: `${token}`
     })
-});  
+});     
 
 app.delete("/logout", (req, res) => {
 
@@ -142,7 +142,7 @@ app.post("/research-papers", async(req, res) => {
 
     if(!userInput){
         return res.json({
-            msg: "Input field is required"   
+            msg: "Input field is required"     
         })
     }
   
@@ -190,45 +190,45 @@ app.get('/cryptonews', async(req, res) => {
 app.get("/ycblogs", async (req, res) => {
    const getYcblogs = await ycBlog();
    return res.json({
-     articles: getYcblogs    
+     startups: getYcblogs    
    })
 });
 
 app.get("/earlyStageStartups", async(req, res) => {
     const getEarlyStartup = await earlyStageStartups();
     return res.json({
-        getEarlyStartup
+        startups: getEarlyStartup
     })
 })
 
 app.get("/all-about-startups", async(req, res) => {
-  const getStartups = await startups();
-  return res.json({
-    news: getStartups
+    const getStartups = await startups();
+    return res.json({
+      startups: getStartups
+    })
   })
-})
 
 app.get("/KnowSaaS", async (req, res) => {
     
     const getSaaS = await saas();
     return res.json({
         Note: "SaaStr is the only non-vendor destination where SaaS companies can come together to learn and grow their businesses through content, events and training.",
-        getSaaS
+        startups: getSaaS
     })
 } )
 
-
+   
 app.get("/aistartups", async(req, res)=> {
     const getAIStartups = await aiStartup();
     return res.json({
-        getAIStartups
+        startups: getAIStartups
     })
 })
 
 app.get("/entrepreneur", async(req, res) => {
     const getFounders = await founders();
     return res.json({
-        getFounders
+        startups: getFounders
     })
 })
 

@@ -3,7 +3,7 @@ const parser = new Parser();
 
 const articles = async () => {
     const feed = await parser.parseURL("https://www.ycombinator.com/blog/rss");
-    return feed.items.slice(0, 6).map(item => ({
+    return feed.items.slice(0, 4).map(item => ({
         title: item.title,
         link: item.link  
     }));

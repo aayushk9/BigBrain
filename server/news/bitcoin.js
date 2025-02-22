@@ -4,7 +4,7 @@ const parser = new Parser();
 const bitcoinNews = async() => {
     try {
         const feed = await parser.parseURL('https://bitcoinmagazine.com/.rss/full/')
-        return feed.items.slice(0, 6).map(item => ({
+        return feed.items.slice(0, 10).map(item => ({
             title: item.title,
             link: item.link  
         }));

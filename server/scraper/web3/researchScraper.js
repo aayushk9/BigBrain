@@ -3,18 +3,13 @@ const xml2js = require("xml2js");
 const Bottleneck = require("bottleneck");
 const redis = require("redis");
 
-
-const client = redis.createClient();  
-client.on("error", (err) => console.error("Redis Client Error:", err));
-
-(async() => {
-    try{   
-      await client.connect();
-      console.log("Redis conneccted successfully")
-    } catch(err){
-       console.log(`Redis connection failed ${err}`);   
-    }   
-})
+const client = redis.createClient({
+    url: process.env.REDIS_URL,
+    socket: {
+        tls: true,  
+        rejectUnauthorized: false
+    }
+});
 
 const limiter = new Bottleneck({
     minTime: 15000 // 15 seconds between requests (arXiv's rule)
@@ -25,7 +20,7 @@ const fetchArxivPapers = async (userInput) => {
     try {    
 
         if (!client.isOpen) {
-            console.log(" reconnecting redis");
+            console.log("reconnecting redis");
             await client.connect();
         }
 
@@ -34,6 +29,7 @@ const fetchArxivPapers = async (userInput) => {
             console.log("Serving from cache");
             return JSON.parse(cachedData) // returning the data in our cache
         }
+
         const url = `http://export.arxiv.org/api/query?search_query=${encodeURIComponent(userInput)}&start=0&max_results=10`;
 
         const { data } = await axios.get(url);
@@ -44,13 +40,8 @@ const fetchArxivPapers = async (userInput) => {
 
         console.log("Fetching from arXiv...");
         let papers = entries.map((entry) => ({
-            type: "Research Paper", 
             title: entry.title,  
-            abstract: entry.summary,
             keywords: "", 
-            author: Array.isArray(entry.author)  
-                ? entry.author.map(a => a.name).join(", ")
-                : entry.author.name,    
             link: entry.id,    
             topic: "General", 
             source: "arXiv",
@@ -64,7 +55,7 @@ const fetchArxivPapers = async (userInput) => {
         console.error("Error fetching from arXiv API:", error);
         return [];
     }
-});
+});  
 };
 
 process.on("exit", () => {
