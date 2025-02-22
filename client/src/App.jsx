@@ -30,7 +30,7 @@ function App() {
                 <Navbar />
                 <div className="flex flex-col items-center justify-start min-h-screen mt-0 mr-8 ml-8 -translate-y-4 ">
                   <Context />
-                  <div className="flex flex-row gap-4 mt-2">
+                  <div className="flex flex-row gap-4 ">
                     <CryptoNews />   
                     <Research />
                     <Startups />

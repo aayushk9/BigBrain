@@ -55,7 +55,7 @@ export function ResearchSearch() {
                 <input
                     type="text"
                     value={userInput}
-                    placeholder="Search research papers..."
+                    placeholder="search research, whitepapers"
                     onChange={(e) => setUserInput(e.target.value)}
                     className="flex-1 p-2 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                 />
