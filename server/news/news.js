@@ -38,11 +38,11 @@ const fetchNews = async () => {
         ])
 
         const allNews = [...telegraphNews, ...bitcoinNews, ...cryptoSlateNews, ...journalNews,]
-        await client.setEx(cacheKey, JSON.stringify(allNews));
+        //await client.setEx(cacheKey, JSON.stringify(allNews));
         return allNews;
 
     } catch (err) {
-        console.error(err);
+        console.error(err);   
     }
 }
 
