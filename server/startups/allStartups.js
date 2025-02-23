@@ -39,7 +39,7 @@ const startUpNews = async () => {
         ])
 
         const allNews = [...aiStartup, ...forFounders, ...earlyStartups, ...saas, ...ycombinator]
-        await client.setEx(cacheKey, 600, JSON.stringify(allNews));
+        await client.setEx(cacheKey, JSON.stringify(allNews));
         return allNews;
     } catch (error) {
         console.error("getting error: ", error)

@@ -151,9 +151,7 @@ app.post("/research-papers", async (req, res) => {
                 topic: paper.topic,
                 source: paper.source,
             })),
-            ...useScraper.map(item => ({
-                ...item,
-            }))
+            ...useScraper
         ]
 
         return res.json({  
@@ -163,7 +161,7 @@ app.post("/research-papers", async (req, res) => {
         console.error(err);
         return res.status(500).json({ msg: "Internal server error" });
     }
-})
+})  
 
 app.get('/cryptonews', async (req, res) => {
     const getNews = await news();
