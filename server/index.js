@@ -151,7 +151,7 @@ app.post("/research-papers", async (req, res) => {
                 topic: paper.topic,
                 source: paper.source,
             })),
-            ...useScraper
+            ...useScraper     
         ]
 
         return res.json({  

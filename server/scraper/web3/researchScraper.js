@@ -6,7 +6,7 @@ const redis = require("redis");
 const client = redis.createClient({
     url: process.env.REDIS_URL,
     socket: {
-        tls: true,  
+        tls: true,     
         rejectUnauthorized: false
     }
 });
@@ -48,7 +48,7 @@ const fetchArxivPapers = async (userInput) => {
             category: "web3" 
         })); 
         
-        await client.setEx(userInput, JSON.stringify(papers)); // storing new requests (papers) in redis for 15 minutes
+        await client.setEx(userInput,400, JSON.stringify(papers)); // storing new requests (papers) in redis for 15 minutes
         console.log("Fetched from arvix and cached");
         return papers;
     } catch (error) {  

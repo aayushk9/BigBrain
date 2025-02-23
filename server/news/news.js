@@ -16,7 +16,7 @@ const client = redis.createClient({
 const fetchNews = async () => {
     try {
 
-        const cacheKey = "crypto_news";
+        const cacheKey = "crypto_news";   
 
         if (!client.isOpen) {
             console.log("reconnecting redis");
@@ -38,7 +38,7 @@ const fetchNews = async () => {
         ])
 
         const allNews = [...telegraphNews, ...bitcoinNews, ...cryptoSlateNews, ...journalNews,]
-        await client.setEx(cacheKey, JSON.stringify(allNews));
+        await client.setEx(cacheKey, 200, JSON.stringify(allNews));
         return allNews;
 
     } catch (err) {
