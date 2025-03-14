@@ -1,5 +1,7 @@
 const Parser = require("rss-parser");
-const parser = new Parser();
+const parser = new Parser({
+  timeout: 5000
+});
 
 const coinTelegraphNews = async() => {
     try {

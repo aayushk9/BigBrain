@@ -1,5 +1,7 @@
 const Parser = require("rss-parser");
-const parser = new Parser();
+const parser = new Parser({
+    timeout: 5000
+});
 
 const articles = async () => {
     const feed = await parser.parseURL("https://www.ycombinator.com/blog/rss");
@@ -10,5 +12,3 @@ const articles = async () => {
 }
 
 articles().then(data => console.log("data fetched"));
-
-module.exports = articles;

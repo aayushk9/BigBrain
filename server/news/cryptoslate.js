@@ -1,5 +1,7 @@
 const Parser = require("rss-parser");
-const parser = new Parser();
+const parser = new Parser({
+    timeout: 5000
+});
 
 const cryptoSlateNews = async() => {
     try {
@@ -12,6 +14,4 @@ const cryptoSlateNews = async() => {
       console.error(err);
       return []  
     }
-}
-
-module.exports = cryptoSlateNews;    
+}    
