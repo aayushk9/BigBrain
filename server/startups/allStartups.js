@@ -28,13 +28,14 @@ const startUpNews = async () => {
         const [aiStartup, forFounders, earlyStartups, saas] = await Promise.all([
             AIStartups(),
             founders(),
-            earlyStage(),  
+            earlyStage(),
             saastr(),
         ])
 
         const allNews = [...aiStartup, ...forFounders, ...earlyStartups, ...saas]
         await client.setEx(cacheKey, 600, JSON.stringify(allNews));
         return allNews;
+
     } catch (error) {
         console.error("getting error: ", error)
     }
